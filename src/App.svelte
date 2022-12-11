@@ -1,5 +1,6 @@
 <script>
   import './app.css';
+  import { fade } from 'svelte/transition'
 
   import Panel from './lib/Panel.svelte'
   import KMeans from './lib/kmeans.js'
@@ -63,7 +64,7 @@
     {/each}
   </Threlte.Canvas>
 {:else}
-  <div class="w-full h-full text-zinc-300 text-3xl font-bold flex justify-center items-center">
+  <div transition:fade class="w-full h-full text-zinc-300 text-3xl font-bold flex justify-center items-center">
     <span>Waiting for init...</span>
   </div>
 {/if}

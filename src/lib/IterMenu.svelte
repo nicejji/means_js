@@ -1,5 +1,4 @@
 <script>
-  import { fade } from "svelte/transition";
   import { selectedState } from "../stores";
   import { createEventDispatcher } from "svelte";
 
@@ -30,20 +29,20 @@
     {/each}
   </datalist>
   <hr>
-  <span class="text-xs text-zinc-400">Click on center to watch connections</span>
+  <span class="text-xs text-zinc-400">Click on center to watch on connections</span>
   <div class="overflow-scroll flex flex-col h-full gap-2">
     {#each centers as c, i}
-      <div 
+      <div
       class={"flex flex-col px-2 hover:bg-zinc-700 cursor-default " + (selected[i] ? "bg-zinc-200 text-zinc-900 hover:bg-zinc-400" : "")}
       on:click={() => {dispatch('selectCenters', i)}} on:keydown={() => {dispatch('selectCenters', i)}}>
         <div class="w-full h-2" style={`background-color: ${colors[i]}`}></div>
         <div class="text-s flex flex-row justify-between">
           <span class="font-bold italic">{`Center ${i}`}</span>
-          <span in:fade>{`${labels.reduce((n, val) => n + (val === i), 0)} points`}</span>
+          <span>{`${labels.reduce((n, val) => n + (val === i), 0)} points`}</span>
         </div>
         <span class="text-xs">{`x: ${c[0].toFixed(2)} y: ${c[1].toFixed(2)} z: ${c[2].toFixed(2)}`}</span>
       </div>
     {/each}
     </div>
-  <button class="bg-blue-600 p-3" on:click={() => dispatch('restart', 1)}>Restart</button>
+  <button class="bg-cyan-900 p-3 hover:bg-cyan-800" on:click={() => dispatch('restart', 1)}>Restart</button>
 </div>

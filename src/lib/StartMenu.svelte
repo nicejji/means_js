@@ -24,16 +24,16 @@
     <p class="text-s font-bold">Initalization type<p>
     <div class="flex flex-row justify-between w-full">
       <button 
-        class={(plusPlusInit ? "bg-blue-200/90 text-zinc-700 " : "bg-zinc-600/40 ") + "p-2 font-bold"}
+        class={(plusPlusInit ? "bg-blue-200/90 text-zinc-700 " : "bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 ") + "p-2 font-bold " }
         on:click={() => {plusPlusInit=true}}>KMeans++</button>
       <button 
-        class={(!plusPlusInit ? "bg-red-200/90 text-zinc-700 " : "bg-zinc-600/40 ") + "p-2 font-bold"}
+        class={(!plusPlusInit ? "bg-red-200/90 text-zinc-700 " : "bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 ") + "p-2 font-bold"}
         on:click={() => {plusPlusInit=false}}>First Points</button>
     </div>
     <div class="h-full"></div>
     {#if allCorrect}
       <hr>
-    <button class="bg-emerald-700/90 p-3 w-full" on:click={() => {start()}}>
+      <button class="bg-emerald-700/90 p-3 w-full hover:bg-emerald-600/90" on:click={() => {start()}}>
       Start
     </button>
     {/if}
