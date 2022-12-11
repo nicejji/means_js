@@ -1,7 +1,9 @@
 <script>
   import './app.css';
+
   import Panel from './lib/Panel.svelte'
   import KMeans from './lib/kmeans.js'
+
   import { selectedState } from './stores';
 
   import chroma from 'chroma-js'
@@ -12,23 +14,23 @@
   $: centers = states[$selectedState][0];
   $: labels = states[$selectedState][1];
   $: statesCount = states.length
+
   let points = []
   let colors = []
   let selected = [];
   let isStarted = false
 
   const start = ({pointsCount, clusterCount, plusPlusInit}) => {
-    console.log(pointsCount, clusterCount, plusPlusInit)
-    isStarted = true
-    colors = chroma.scale(['#fafa6e', '#2a4858']).mode('lch').colors(clusterCount)
     const generated = []
     for (let i=0; i < pointsCount; i++) {
       generated.push([Math.random() * 150, Math.random() * 150, Math.random() * 150])
     }
     points = generated
-    selectedState.set(0)
     states = [...KMeans(points, clusterCount, plusPlusInit)]
+    colors = chroma.scale('Spectral').mode('lab').colors(clusterCount)
+    selectedState.set(0)
     selected = new Array(centers.length).fill(false)
+    isStarted = true
   }
 </script>
 {#if isStarted}
