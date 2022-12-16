@@ -8,7 +8,6 @@
   export let statesCount
   export let isStarted
   export let selected
-  export let hidden
 
 </script>
 
@@ -17,6 +16,6 @@
     <span class="text-xl font-bold">KMeans 3D</span>
     <StartMenu on:start/>
   {:else}
-    <IterMenu {labels} {centers} {colors} {statesCount} {selected} {hidden} on:selectCenters on:restart on:hideCenters/>
+    <IterMenu {labels} {centers} {colors} {statesCount} {selected} on:selectCenters on:restart/>
   {/if}
 </div>

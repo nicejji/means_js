@@ -1,8 +1,9 @@
 <script>
   import './app.css';
+  import { fade } from 'svelte/transition'
 
   import Panel from './lib/Panel.svelte'
-  import { KMeans } from './lib/kmeans.js'
+  import KMeans from './lib/kmeans.js'
 
   import { selectedState } from './stores';
 
@@ -17,21 +18,27 @@
 
   let points = []
   let colors = []
-  let selected = []
-  let hidden = []
+  let selected = [];
   let isStarted = false
 
-  const start = (data) => {
-    points = data.points
-    states = [...KMeans(points, data.clusterCount, data.plusPlusInit)]
-    colors = chroma.scale('Spectral').mode('lab').colors(data.clusterCount)
+  const start = ({pointsCount, clusterCount, plusPlusInit, customPoints}) => {
+    if (!customPoints) {
+      const generated = []
+      for (let i=0; i < pointsCount; i++) {
+        generated.push([Math.random() * 150, Math.random() * 150, Math.random() * 150])
+      }
+      points = generated
+    }
+    else {
+      points = customPoints
+    }
+    states = [...KMeans(points, clusterCount, plusPlusInit)]
+    colors = chroma.scale('Spectral').mode('lab').colors(clusterCount)
     selectedState.set(0)
     selected = new Array(centers.length).fill(false)
-    hidden = new Array(centers.length).fill(false)
     isStarted = true
   }
 </script>
-
 {#if isStarted}
   <Threlte.Canvas>
     <Threlte.PerspectiveCamera position={{ x: 250, y: 250, z: 250}}>
@@ -43,15 +50,13 @@
     <Threlte.Three type={new Three.AxesHelper(500)}/>
 
     {#each points as p, i}
-      {#if !hidden[labels[i]]}
-        <Threlte.Mesh 
-          geometry={new Three.SphereGeometry(1, 64, 64)}
-          material={new Three.MeshStandardMaterial({ color: colors[labels[i]] || "white"})}
-          position={{x: p[0], y: p[1], z: p[2]}}
-        />
-        {#if labels.length && selected[labels[i]]}
-          <Threlte.Line points={[centers[labels[i]], p]} material={new Three.LineBasicMaterial({color: colors[labels[i]]})}/>
-        {/if}
+      <Threlte.Mesh 
+        geometry={new Three.SphereGeometry(1, 64, 64)}
+        material={new Three.MeshStandardMaterial({ color: colors[labels[i]] || "white"})}
+        position={{x: p[0], y: p[1], z: p[2]}}
+      />
+      {#if labels.length && selected[labels[i]]}
+        <Threlte.Line points={[centers[labels[i]], p]} material={new Three.LineBasicMaterial({color: colors[labels[i]]})}/>
       {/if}
     {/each}
 
@@ -64,7 +69,7 @@
     {/each}
   </Threlte.Canvas>
 {:else}
-  <div class="w-full h-full text-zinc-300 text-3xl font-bold flex justify-center items-center">
+  <div transition:fade class="w-full h-full text-zinc-300 text-3xl font-bold flex justify-center items-center">
     <span>Waiting for init...</span>
   </div>
 {/if}
@@ -73,6 +78,5 @@
   on:start={e => start(e.detail)}
   on:restart={() => isStarted = !isStarted}
   on:selectCenters={(e) => {selected[e.detail] = !selected[e.detail]}}
-  on:hideCenters={e => hidden[e.detail] = !hidden[e.detail]}
-  {labels} {centers} {colors} {statesCount} {isStarted} {selected} {hidden}
+  {labels} {centers} {colors} {statesCount} {isStarted} {selected}
 />

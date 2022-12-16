@@ -1,24 +1,39 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { generate_points } from "./kmeans";
 
   const dispatch = createEventDispatcher()
 
-  let pointsCount = ""
+  function isValidPoints(str) {
+    try { JSON.parse(str) } catch (e) { return false }
+    return true
+  }
+
+  let points = ""
+  let textarea;
   let clusterCount = ""
   let plusPlusInit = true
-  $: allCorrect = parseInt(clusterCount) && parseInt(pointsCount)
+  let randomQuantity = ""
+  $: allCorrect = parseInt(clusterCount) && isValidPoints(points)
   const start = () => {
     if (allCorrect) {
-      pointsCount = parseInt(pointsCount)
+      points = JSON.parse(points)
       clusterCount = parseInt(clusterCount)
-      dispatch('start', {pointsCount, clusterCount, plusPlusInit})
+      dispatch('start', {points, clusterCount, plusPlusInit})
     }
   }
 </script>
 
 <div class="flex flex-col text-white p-3 gap-2 text-s font-bold">
+  <div class="flex flex-row items-center gap-5">
     <span>Points</span>
-    <input class="bg-zinc-600/40" placeholder="How many points?" bind:value={pointsCount}>
+    <button class="bg-zinc-500 text-xs p-1" on:click={() => {textarea.select(); document.execCommand('copy')}}>copy</button>
+  </div>
+    <textarea class="bg-zinc-600/40 outline-none p-3" placeholder="Enter points" cols="20" rows="10" bind:value={points} bind:this={textarea}></textarea>
+    <div class="flex flex-row w-fit gap-2 items-center">
+      <button class="text-xs" on:click={() => {points = JSON.stringify(generate_points(randomQuantity))}}>Generate randomly</button>
+      <input class="bg-transparent text-xs w-min" type="number" placeholder="quantity" bind:value={randomQuantity}>
+    </div>
     <p class="font-bold">Clusters</p>
     <input class="bg-zinc-600/40" placeholder="How many clusters?" bind:value={clusterCount}>
     <p class="text-s font-bold">Initalization type<p>

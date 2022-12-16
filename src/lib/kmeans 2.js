@@ -1,4 +1,4 @@
-function * KMeans (points, clusterCount, plusPlusInit) {
+export default function * KMeans (points, clusterCount, plusPlusInit) {
   const pointsCount = points.length
   const propsCount = points[0].length
   let centers
@@ -92,13 +92,3 @@ function * KMeans (points, clusterCount, plusPlusInit) {
     }
   }
 }
-
-function generate_points(pointsCount) {
-    const generated = []
-    for (let i=0; i < pointsCount; i++) {
-      generated.push([Math.random() * 150, Math.random() * 150, Math.random() * 150])
-    }
-    return generated
-}
-
-export {KMeans, generate_points}

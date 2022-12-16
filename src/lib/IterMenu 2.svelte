@@ -8,7 +8,6 @@
   export let colors
   export let statesCount
   export let selected
-  export let hidden
 
   const resolveStatus = (cur, end) => {
     if (cur === 0) return "Initialized centers"
@@ -33,18 +32,15 @@
   <span class="text-xs text-zinc-400">Click on center to watch on connections</span>
   <div class="overflow-scroll flex flex-col h-full gap-2">
     {#each centers as c, i}
-      <div class="flex flex-row w-full justify-between gap-2">
-        <button class="text-xs" on:click={() => dispatch('hideCenters', i)}>{hidden[i] ? "Show" : "Hide"}</button>
-        <div
-        class={"w-full flex flex-col px-2 hover:bg-zinc-700 cursor-default " + (selected[i] ? "bg-zinc-200 text-zinc-900 hover:bg-zinc-400" : "")}
-        on:click={() => {dispatch('selectCenters', i)}} on:keydown={() => {dispatch('selectCenters', i)}}>
-          <div class="w-full h-2" style={`background-color: ${colors[i]}`}></div>
-          <div class="text-s flex flex-row justify-between">
-            <span class="font-bold italic">{`Center ${i}`}</span>
-            <span>{`${labels.reduce((n, val) => n + (val === i), 0)} points`}</span>
-          </div>
-          <span class="text-xs">{`x: ${c[0].toFixed(2)} y: ${c[1].toFixed(2)} z: ${c[2].toFixed(2)}`}</span>
+      <div
+      class={"flex flex-col px-2 hover:bg-zinc-700 cursor-default " + (selected[i] ? "bg-zinc-200 text-zinc-900 hover:bg-zinc-400" : "")}
+      on:click={() => {dispatch('selectCenters', i)}} on:keydown={() => {dispatch('selectCenters', i)}}>
+        <div class="w-full h-2" style={`background-color: ${colors[i]}`}></div>
+        <div class="text-s flex flex-row justify-between">
+          <span class="font-bold italic">{`Center ${i}`}</span>
+          <span>{`${labels.reduce((n, val) => n + (val === i), 0)} points`}</span>
         </div>
+        <span class="text-xs">{`x: ${c[0].toFixed(2)} y: ${c[1].toFixed(2)} z: ${c[2].toFixed(2)}`}</span>
       </div>
     {/each}
     </div>
