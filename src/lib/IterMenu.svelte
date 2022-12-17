@@ -34,9 +34,9 @@
   <div class="overflow-scroll flex flex-col h-full gap-2">
     {#each centers as c, i}
       <div class="flex flex-row w-full justify-between gap-2">
-        <button class="text-xs" on:click={() => dispatch('hideCenters', i)}>{hidden[i] ? "Show" : "Hide"}</button>
+        <button class={"text-xs " + (!hidden[i] ? "text-white" : "text-zinc-500")} on:click={() => dispatch('hideCenters', i)}>{hidden[i] ? "Show" : "Hide"}</button>
         <div
-        class={"w-full flex flex-col px-2 hover:bg-zinc-700 cursor-default " + (selected[i] ? "bg-zinc-200 text-zinc-900 hover:bg-zinc-400" : "")}
+        class={"w-full flex flex-col px-2 hover:bg-zinc-700 cursor-default " + (selected[i] && !hidden[i] ? "bg-zinc-200 text-zinc-900 hover:bg-zinc-400" : "")}
         on:click={() => {dispatch('selectCenters', i)}} on:keydown={() => {dispatch('selectCenters', i)}}>
           <div class="w-full h-2" style={`background-color: ${colors[i]}`}></div>
           <div class="text-s flex flex-row justify-between">

@@ -1,7 +1,8 @@
 <script>
   import './app.css';
 
-  import Panel from './lib/Panel.svelte'
+  import StartMenu from './lib/StartMenu.svelte';
+  import IterMenu from './lib/IterMenu.svelte';
   import { KMeans } from './lib/kmeans.js'
 
   import { selectedState } from './stores';
@@ -69,10 +70,14 @@
   </div>
 {/if}
 
-<Panel 
-  on:start={e => start(e.detail)}
-  on:restart={() => isStarted = !isStarted}
-  on:selectCenters={(e) => {selected[e.detail] = !selected[e.detail]}}
-  on:hideCenters={e => hidden[e.detail] = !hidden[e.detail]}
-  {labels} {centers} {colors} {statesCount} {isStarted} {selected} {hidden}
-/>
+<div class="flex flex-col bg-zinc-600/20 w-fit z-10 gap-2 items-center p-2 absolute inset-0 text-white h-full overflow-hidden">
+  {#if !isStarted}
+    <span class="text-xl font-extrabold">KMeans 3D</span>
+    <StartMenu on:start={e => start(e.detail)}/>
+  {:else}
+    <IterMenu {labels} {centers} {colors} {statesCount} {selected} {hidden} 
+      on:selectCenters={(e) => {selected[e.detail] = !selected[e.detail]}}
+      on:restart={() => isStarted = !isStarted}
+      on:hideCenters={e => hidden[e.detail] = !hidden[e.detail]}/>
+  {/if}
+</div>
