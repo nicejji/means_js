@@ -31,8 +31,8 @@
   </div>
     <textarea class="bg-zinc-600/40 outline-none p-3 text-xs font-normal" placeholder="Enter points" cols="20" rows="5" bind:value={points} bind:this={textarea}></textarea>
     <div class="flex flex-row w-fit gap-2 items-center">
+      <input class="bg-transparent text-xs w-20" placeholder="Quantity" bind:value={randomQuantity}>
       <button class="text-xs hover:bg-zinc-700 p-3 " on:click={() => {points = JSON.stringify(generate_points(randomQuantity))}}>Generate randomly 🎲</button>
-      <input class="bg-transparent text-xs w-20" placeholder="quantity" bind:value={randomQuantity}>
     </div>
     <p class="font-bold">Clusters</p>
     <input class="bg-zinc-600/40" placeholder="Centers quantity" bind:value={clusterCount}>

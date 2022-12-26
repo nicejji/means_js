@@ -17,6 +17,8 @@
     return cur % 2 ? "Updated labels" : "Moved centroids"
   }
   $: status = resolveStatus($selectedState, statesCount)
+
+  const toggleAll = (event) => {[...Array(centers.length).keys()].map(v => dispatch(event, v))}
 </script>
 
 <div class="flex flex-col text-white p-3 gap-2 h-full">
@@ -32,6 +34,12 @@
   <hr>
   <span class="text-xs text-zinc-400">Click on center to watch on connections</span>
   <div class="overflow-scroll flex flex-col h-full gap-2">
+    <div class="flex gap-2">
+      <button class="w-full text-xs bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 p-2 font-bold"
+              on:click={() => {toggleAll('hideCenters')}}>Toggle visibility</button> 
+      <button class="w-full text-xs bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 p-2 font-bold"
+              on:click={() => {toggleAll('selectCenters')}}>Toggle selection</button> 
+    </div>
     {#each centers as c, i}
       <div class="flex flex-row w-full justify-between gap-2">
         <button class={"text-xs " + (!hidden[i] ? "text-white" : "text-zinc-500")} on:click={() => dispatch('hideCenters', i)}>{hidden[i] ? "Show" : "Hide"}</button>
