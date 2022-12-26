@@ -21,6 +21,7 @@
   let selected = []
   let hidden = []
   let isStarted = false
+  let isBack = false
 
   const start = (data) => {
     points = data.points
@@ -71,13 +72,17 @@
 {/if}
 
 <div class="flex flex-col bg-zinc-600/20 w-fit z-10 gap-2 items-center p-2 absolute inset-0 text-white h-full overflow-hidden">
-  {#if !isStarted}
-    <span class="text-xl font-extrabold">KMeans 3D</span>
-    <StartMenu on:start={e => start(e.detail)}/>
+  <div class="flex flex-row w-full px-3 gap-3">
+    <span class="text-l font-extrabold">KMeans 3D</span>
+    {#if isStarted}
+      <button class="text-xs" on:click={() => isBack = !isBack}>{isBack ? 'Back to iterator' : 'Back to menu'}</button>
+    {/if}
+  </div>
+  {#if !isStarted || isBack}
+    <StartMenu on:start={e => {start(e.detail); isBack = false}}/>
   {:else}
     <IterMenu {labels} {centers} {colors} {statesCount} {selected} {hidden} 
       on:selectCenters={(e) => {selected[e.detail] = !selected[e.detail]}}
-      on:restart={() => isStarted = !isStarted}
       on:hideCenters={e => hidden[e.detail] = !hidden[e.detail]}/>
   {/if}
 </div>

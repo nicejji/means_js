@@ -33,13 +33,13 @@
   </datalist>
   <hr>
   <span class="text-xs text-zinc-400">Click on center to watch on connections</span>
-  <div class="overflow-scroll flex flex-col h-full gap-2">
     <div class="flex gap-2">
       <button class="w-full text-xs bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 p-2 font-bold"
               on:click={() => {toggleAll('hideCenters')}}>Toggle visibility</button> 
       <button class="w-full text-xs bg-zinc-600/40 hover:bg-zinc-300/90 hover:text-zinc-700 p-2 font-bold"
               on:click={() => {toggleAll('selectCenters')}}>Toggle selection</button> 
     </div>
+  <div class="overflow-scroll flex flex-col h-full gap-2">
     {#each centers as c, i}
       <div class="flex flex-row w-full justify-between gap-2">
         <button class={"text-xs " + (!hidden[i] ? "text-white" : "text-zinc-500")} on:click={() => dispatch('hideCenters', i)}>{hidden[i] ? "Show" : "Hide"}</button>
@@ -56,5 +56,4 @@
       </div>
     {/each}
     </div>
-  <button class="bg-cyan-900 p-3 hover:bg-cyan-800" on:click={() => dispatch('restart', 1)}>Restart</button>
 </div>
