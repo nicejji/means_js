@@ -10,8 +10,11 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.108",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
+    "@types/chroma-js": "^2.4.0",
+    "@types/three": "^0.155.1",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.29",
     "svelte": "^4.0.5",
@@ -20,7 +23,17 @@
     "tslib": "^2.4.1",
     "tw-colors": "^2.2.0",
     "typescript": "^5.0.0",
+    "unplugin-icons": "^0.16.6",
     "vite": "^4.4.2"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@fontsource-variable/fira-code": "^5.0.8",
+    "@threlte/core": "^6.0.6",
+    "@threlte/extras": "^5.4.1",
+    "chroma-js": "^2.4.2",
+    "postprocessing": "^6.33.0",
+    "tailwind-merge": "^1.14.0",
+    "three": "^0.155.0"
+  }
 }

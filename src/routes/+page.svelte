@@ -1,2 +1,35 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+  import { kmeans, plusPlusInit, seed3DPoints } from "$lib/kmeans";
+  import { Canvas } from "@threlte/core";
+  import Scene from "$lib/components/Scene.svelte";
+  import DataViewer from "$lib/components/DataViewer.svelte";
+  import chroma from "chroma-js";
+  import Range from "$lib/components/UI/Range.svelte";
+
+  let stateIndex = 0;
+  let points = seed3DPoints(300, 150);
+
+  $: states = kmeans(points, 20, plusPlusInit);
+  $: currentState = states[stateIndex];
+  $: colors = chroma.scale("Spectral").colors(currentState.data.centers.length);
+</script>
+
+<div class="flex h-full w-full gap-5">
+  <div
+    class="flex flex-col gap-5 h-full border-highlight-med border-2 rounded-lg w-1/3 p-3"
+  >
+    <div class="flex flex-col h-full">
+      <span class="font-bold text-xl">KMeans 3D</span>
+      <span>Points: {points.length}</span>
+      <Range min={0} max={states.length - 1} bind:value={stateIndex} />
+    </div>
+    <DataViewer state={currentState} {colors} />
+  </div>
+  <div
+    class="h-full w-full rounded-lg border-highlight-med border-2 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-highlight-med to-base"
+  >
+    <Canvas>
+      <Scene state={currentState} {points} {colors} />
+    </Canvas>
+  </div>
+</div>

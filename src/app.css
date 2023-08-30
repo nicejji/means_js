@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html, body {
-  @apply h-full bg-base text-text selection:bg-pine selection:text-base;
+  @apply h-full bg-base text-text selection:bg-pine selection:text-text;
 }
