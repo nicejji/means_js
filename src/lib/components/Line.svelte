@@ -13,7 +13,6 @@
 
   onMount(() => {
     $opacity = 0.25;
-    console.log("line mounted");
   });
 
   $: $coords = [...from, ...to];
