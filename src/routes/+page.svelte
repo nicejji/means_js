@@ -1,17 +1,22 @@
 <script lang="ts">
-  import { kmeans, plusPlusInit, seed3DPoints } from "$lib/kmeans";
+  import { kmeans, plusPlusInit, seed3DPoints } from "$lib/utils/kmeans";
   import { Canvas } from "@threlte/core";
-  import Scene from "$lib/components/Scene.svelte";
+  import Scene from "$lib/components/Scene/Scene.svelte";
   import DataViewer from "$lib/components/DataViewer.svelte";
   import chroma from "chroma-js";
   import Range from "$lib/components/UI/Range.svelte";
+  import themeStore from "$lib/stores/theme";
 
   let stateIndex = 0;
-  let points = seed3DPoints(300, 150);
+  let points = seed3DPoints(100, 150);
 
-  $: states = kmeans(points, 20, plusPlusInit);
+  $: states = kmeans(points, 5, plusPlusInit);
   $: currentState = states[stateIndex];
-  $: colors = chroma.scale("Spectral").colors(currentState.data.centers.length);
+
+  $: palette = $themeStore.systemDark
+    ? ["#eb6f92", "#f6c177", "#ebbcba", "#31748f", "#9ccfd8", "#c4a7e7"]
+    : ["#b4637a", "#ea9d34", "#d7827e", "#286983", "#56949f", "#907aa9"];
+  $: colors = chroma.scale(palette).colors(currentState.data.centers.length);
 </script>
 
 <div class="flex h-full w-full gap-5">

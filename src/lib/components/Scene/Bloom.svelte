@@ -9,11 +9,12 @@
     KernelSize,
   } from "postprocessing";
 
-  const { scene, renderer, camera, size } = useThrelte();
-  const composer = new EffectComposer(renderer);
-  let effect: SelectiveBloomEffect | null = null;
   export let selection: Set<Object3D>;
 
+  const { scene, renderer, camera, size } = useThrelte();
+  const composer = new EffectComposer(renderer);
+
+  let effect: SelectiveBloomEffect | null = null;
   $: effect?.selection.set(selection);
 
   const setupEffectComposer = (camera: Camera) => {
@@ -32,7 +33,6 @@
     composer.addPass(new EffectPass(camera, effect));
   };
 
-  // We need to set up the passes according to the camera in use
   $: setupEffectComposer($camera);
   $: composer.setSize($size.width, $size.height);
 

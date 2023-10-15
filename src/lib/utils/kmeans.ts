@@ -15,11 +15,9 @@ export type MeansState = {
 };
 
 export const seed3DPoints = (count: number, propBound: number): Point3D[] => {
-  const generated: Point3D[] = [];
-  for (let i = 0; i < count; i++) {
-    generated.push([Math.random() * propBound, Math.random() * propBound, Math.random() * propBound])
-  }
-  return generated;
+  const generated: point3d[] = [];
+  const getCoord = () => Math.random() * propBound * 2 - propBound;
+  return Array.from({ length: count }, () => Array.from({ length: 3 }, getCoord) as Point3D);
 }
 
 export const plusPlusInit: InitFunction = (points, clusters) => {

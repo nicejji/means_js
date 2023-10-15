@@ -1,17 +1,21 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import "../app.css";
   import "@fontsource-variable/fira-code";
+  import themeStore from "$lib/stores/theme";
+  import { browser } from "$app/environment";
 
-  onMount(() => {
-    const isDark = true; // window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.classList.remove(
-      isDark ? "theme-light" : "theme-dark"
-    );
-    document.documentElement.classList.add(
-      isDark ? "theme-dark" : "theme-light"
-    );
-  });
+  $: {
+    if (browser) {
+      document.documentElement.classList.remove(
+        $themeStore.systemDark ? "theme-light" : "theme-dark"
+      );
+      document.documentElement.classList.add(
+        $themeStore.systemDark ? "theme-dark" : "theme-light"
+      );
+    }
+  }
+
+  const x = 5;
 </script>
 
 <div class="flex flex-col h-full p-5">

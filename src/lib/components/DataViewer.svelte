@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { MeansState } from "$lib/kmeans";
+  import type { MeansState } from "$lib/utils/kmeans";
 
   export let state: MeansState;
   export let colors: string[];
